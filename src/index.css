@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-display-lg: "Hanken Grotesk", sans-serif;
+  --font-headline-md: "Hanken Grotesk", sans-serif;
+  --font-headline-sm: "Hanken Grotesk", sans-serif;
+  --font-body-lg: "Inter", sans-serif;
+  --font-body-md: "Inter", sans-serif;
+  --font-body-sm: "Inter", sans-serif;
+  --font-label-md: "JetBrains Mono", monospace;
+  --font-label-sm: "JetBrains Mono", monospace;
+}
+
+body {
+  font-family: var(--font-body-md);
+  background-color: #f7f9fb;
+  color: #191c1e;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+}
+
+/* Glass panel background */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+.progress-flow-line {
+  background: repeating-linear-gradient(90deg, #cbd5e1 0%, #cbd5e1 40%, transparent 40%, transparent 100%);
+  background-size: 16px 1px;
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  background-size: 200% 100%;
+  animation: shimmer-effect 2s infinite linear;
+}
+
+@keyframes shimmer-effect {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
