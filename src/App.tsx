@@ -165,10 +165,10 @@ export default function App() {
           <button 
             type="button"
             onClick={() => handleSwitchTab("Dashboard" as any)}
-            className={`px-4 py-2 text-xs font-bold font-label-md rounded border transition-all cursor-pointer ${
+            className={`px-4 py-2 text-xs font-bold font-label-md rounded-lg transition-all cursor-pointer ${
               activeTab === ("Dashboard" as any)
-                ? "bg-black text-white border-black" 
-                : "border-transparent text-slate-500 hover:bg-slate-50 hover:text-black"
+                ? "glass-btn-primary" 
+                : "glass-btn-secondary"
             }`}
           >
             Dashboard
@@ -178,10 +178,10 @@ export default function App() {
             type="button"
             onClick={() => handleSwitchTab("Processor")}
             disabled={!status.budgetSaved}
-            className={`px-4 py-2 text-xs font-bold font-label-md rounded border transition-all cursor-pointer flex items-center gap-1.5 ${
+            className={`px-4 py-2 text-xs font-bold font-label-md rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === "Processor"
-                ? "bg-black text-white border-black animate-pulse" 
-                : "border-transparent text-slate-500 hover:bg-slate-50 hover:text-black disabled:opacity-40 disabled:cursor-not-allowed"
+                ? "glass-btn-primary animate-pulse" 
+                : "glass-btn-secondary"
             }`}
           >
             Processor
@@ -191,10 +191,10 @@ export default function App() {
           <button 
             type="button"
             onClick={() => handleSwitchTab("Reporting")}
-            className={`px-4 py-2 text-xs font-bold font-label-md rounded border transition-all cursor-pointer ${
+            className={`px-4 py-2 text-xs font-bold font-label-md rounded-lg transition-all cursor-pointer ${
               activeTab === "Reporting"
-                ? "bg-black text-white border-black" 
-                : "border-transparent text-slate-500 hover:bg-slate-50 hover:text-black"
+                ? "glass-btn-primary" 
+                : "glass-btn-secondary"
             }`}
           >
             Reporting

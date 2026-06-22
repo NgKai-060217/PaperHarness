@@ -207,23 +207,23 @@ export default function ReportingView({ status }: ReportingViewProps) {
           
           <div className="flex flex-wrap items-center gap-2 pt-1">
             <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider font-label-sm">Auditing Scope:</span>
-            <div className="inline-flex bg-slate-150 p-0.5 rounded-lg border border-slate-200">
+            <div className="inline-flex gap-1.5 bg-slate-150 p-1 rounded-xl border border-slate-200/50">
               <button 
                 onClick={() => { setViewMode("user"); setCurrentPage(1); }}
-                className={`px-3 py-1.5 text-xs font-bold rounded-md transition-all font-label-md cursor-pointer ${
+                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all font-label-md cursor-pointer ${
                   viewMode === "user" 
-                    ? "bg-[#006c49] text-white shadow-xs" 
-                    : "text-slate-600 hover:text-slate-900"
+                    ? "glass-btn-emerald" 
+                    : "glass-btn-secondary"
                 }`}
               >
                 True User Activities
               </button>
               <button 
                 onClick={() => { setViewMode("all"); setCurrentPage(1); }}
-                className={`px-3 py-1.5 text-xs font-bold rounded-md transition-all font-label-md cursor-pointer ${
+                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all font-label-md cursor-pointer ${
                   viewMode === "all" 
-                    ? "bg-[#006c49] text-white shadow-xs" 
-                    : "text-slate-600 hover:text-slate-900"
+                    ? "glass-btn-emerald" 
+                    : "glass-btn-secondary"
                 }`}
               >
                 Benchmark Logs (All)
@@ -323,9 +323,9 @@ export default function ReportingView({ status }: ReportingViewProps) {
                 Estimated credit expenditure over the preceding 7 days (USD).
               </p>
             </div>
-            <div className="flex border border-slate-200 rounded-lg overflow-hidden text-xs font-semibold">
-              <button className="px-3.5 py-1.5 bg-slate-50 hover:bg-slate-100 text-slate-700 transition-colors border-r border-slate-200 font-label-sm">Daily</button>
-              <button className="px-3.5 py-1.5 bg-slate-100 text-[#131b2e] transition-colors font-label-sm font-bold">Weekly</button>
+            <div className="flex gap-1.5 text-xs font-semibold">
+              <button className="px-3.5 py-1.5 glass-btn-secondary rounded-lg font-label-sm">Daily</button>
+              <button className="px-3.5 py-1.5 glass-btn-primary rounded-lg font-label-sm font-bold">Weekly</button>
             </div>
           </div>
 
@@ -437,7 +437,7 @@ export default function ReportingView({ status }: ReportingViewProps) {
           <button 
             onClick={handleExportCSV}
             disabled={totalJobsCount === 0}
-            className="flex items-center gap-1.5 text-xs font-bold px-3.5 py-2 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed border border-slate-200 transition-colors rounded-lg font-label-sm cursor-pointer"
+            className="flex items-center gap-1.5 text-xs font-bold px-3.5 py-2 glass-btn-secondary rounded-lg font-label-sm cursor-pointer"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Export CSV</span>
@@ -500,14 +500,14 @@ export default function ReportingView({ status }: ReportingViewProps) {
               <button 
                 onClick={prevPage}
                 disabled={currentPage === 1}
-                className="p-1.5 border border-slate-200 rounded hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed text-slate-700 bg-white transition-all cursor-pointer"
+                className="p-1.5 glass-btn-secondary rounded-lg cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button 
                 onClick={nextPage}
                 disabled={currentPage === totalPages}
-                className="p-1.5 border border-slate-200 rounded hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed text-slate-700 bg-white transition-all cursor-pointer"
+                className="p-1.5 glass-btn-secondary rounded-lg cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

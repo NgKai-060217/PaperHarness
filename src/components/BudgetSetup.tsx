@@ -56,9 +56,9 @@ export default function BudgetSetup({ status, onUpdateBudget, onSwitchTab, onCle
         <div className="flex gap-2">
           <button 
             onClick={() => setShowClearConfirm(true)}
-            className="px-3 py-2 border border-red-200 hover:bg-red-50 text-red-700 text-xs rounded transition-colors flex items-center gap-1.5 font-label-md"
+            className="glass-btn-red px-3 py-1.5 text-xs rounded-lg flex items-center gap-1.5 font-label-md"
           >
-            <RefreshCw className="w-3.5 h-3.5" />
+            <RefreshCw className="w-3.5 h-3.5 animate-spin-slow" />
             Reset Database
           </button>
         </div>
@@ -77,7 +77,7 @@ export default function BudgetSetup({ status, onUpdateBudget, onSwitchTab, onCle
             <div className="flex justify-end gap-3 pt-2">
               <button 
                 onClick={() => setShowClearConfirm(false)}
-                className="px-4 py-2 border border-slate-200 hover:bg-slate-50 text-slate-700 text-sm rounded font-medium"
+                className="glass-btn-secondary px-4 py-2 text-sm rounded-lg font-medium"
               >
                 Cancel
               </button>
@@ -88,7 +88,7 @@ export default function BudgetSetup({ status, onUpdateBudget, onSwitchTab, onCle
                   setJobLimit("1.00");
                   setShowClearConfirm(false);
                 }}
-                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm rounded font-medium"
+                className="glass-btn-red px-4 py-2 text-sm rounded-lg font-medium"
               >
                 Yes, Reset All
               </button>
@@ -262,10 +262,10 @@ export default function BudgetSetup({ status, onUpdateBudget, onSwitchTab, onCle
                 disabled={saving}
                 className={`w-full sm:w-auto px-6 py-3 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition-all ${
                   saving 
-                    ? "bg-slate-300 text-slate-500 cursor-not-allowed" 
+                    ? "glass-btn-secondary" 
                     : saveSuccess 
-                    ? "bg-[#006c49] hover:bg-[#005c3d] text-white" 
-                    : "bg-black hover:bg-slate-800 text-white"
+                    ? "glass-btn-emerald" 
+                    : "glass-btn-primary"
                 }`}
               >
                 {saving ? (

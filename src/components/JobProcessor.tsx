@@ -283,7 +283,7 @@ export default function JobProcessor({ status, onProcessJob, onTerminate, onResu
                     console.error(e);
                   }
                 }}
-                className="px-3.5 py-2 bg-red-600 hover:bg-red-700 text-white rounded font-semibold text-xs transition-colors shrink-0 font-label-md shadow-xs cursor-pointer"
+                className="glass-btn-emerald px-3.5 py-2 text-white rounded-lg font-semibold text-xs transition-colors shrink-0 font-label-md shadow-xs cursor-pointer"
               >
                 Reset Guardrails &amp; Resume
               </button>
@@ -360,7 +360,7 @@ export default function JobProcessor({ status, onProcessJob, onTerminate, onResu
             <p className="text-xs text-slate-400 mt-1 leading-relaxed font-body-sm">
               Drag &amp; drop PDF/text or click to browse academic manuscripts.
             </p>
-            <button className="mt-4 bg-black hover:bg-slate-800 text-white font-semibold text-xs px-4 py-2 rounded-lg transition-colors font-label-md">
+            <button className="mt-4 glass-btn-primary font-semibold text-xs px-4 py-2 rounded-lg font-label-md">
               Select File
             </button>
           </div>
@@ -378,10 +378,10 @@ export default function JobProcessor({ status, onProcessJob, onTerminate, onResu
                     setFileLastModified(null);
                     setErrorMessage(null);
                   }}
-                  className={`w-full text-left p-2.5 rounded border transition-all text-ellipsis overflow-hidden font-medium ${
+                  className={`w-full text-left p-2.5 rounded-lg transition-all text-ellipsis overflow-hidden font-medium ${
                     sourceName === paper.name 
-                      ? "bg-slate-50 border-black font-bold text-black" 
-                      : "bg-white border-transparent hover:bg-slate-50 text-slate-600"
+                      ? "glass-btn-primary font-bold" 
+                      : "glass-btn-secondary"
                   }`}
                 >
                   {paper.label}
@@ -428,7 +428,7 @@ export default function JobProcessor({ status, onProcessJob, onTerminate, onResu
           <button 
             type="button"
             onClick={handleTerminatePress}
-            className="w-full bg-[#410004]/10 hover:bg-red-100/70 text-[#ef4444] border border-red-200 p-4 rounded-xl flex items-center justify-center gap-2.5 transition-colors cursor-pointer"
+            className="w-full glass-btn-red p-4 rounded-xl flex items-center justify-center gap-2.5 cursor-pointer"
           >
             <StopCircle className="w-4.5 h-4.5 shrink-0" />
             <span className="font-semibold text-xs font-label-md">Terminate Current Job</span>
@@ -522,8 +522,8 @@ export default function JobProcessor({ status, onProcessJob, onTerminate, onResu
                   onClick={() => handleActionChange(actObj.id)}
                   className={`flex-1 min-w-[130px] px-3 py-3 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition-all ${
                     matches 
-                      ? "bg-black text-white shadow-xs" 
-                      : "bg-slate-100 hover:bg-slate-150 text-slate-700"
+                      ? "glass-btn-primary" 
+                      : "glass-btn-secondary"
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5 shrink-0" />
@@ -536,7 +536,7 @@ export default function JobProcessor({ status, onProcessJob, onTerminate, onResu
               type="button"
               onClick={handleProcess}
               disabled={processingState !== "IDLE" && processingState !== "COMPLETED"}
-              className="px-6 py-3 bg-[#006c49] hover:bg-[#005236] disabled:bg-slate-350 disabled:cursor-not-allowed text-white font-bold text-xs rounded-lg flex items-center gap-2 cursor-pointer animate-pulse shrink-0"
+              className="px-6 py-3 glass-btn-emerald disabled:opacity-40 text-white font-bold text-xs rounded-lg flex items-center gap-2 cursor-pointer animate-pulse shrink-0"
             >
               <Play className="w-3.5 h-3.5 fill-white shrink-0" />
               <span>{processingState === "IDLE" || processingState === "COMPLETED" ? "Execute" : "Processing"}</span>
