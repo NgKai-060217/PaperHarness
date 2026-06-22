@@ -1,5 +1,5 @@
 {
-  "name": "Paper Harness Monitor",
+  "name": "OpenHarness",
   "description": "An academic paper rewriter and summarizer with live budget limiters and audit trails powered by DeepSeek AI.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

@@ -143,7 +143,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-[#f7f9fb] flex flex-col items-center justify-center space-y-4">
         <div className="w-12 h-12 rounded-full border-4 border-slate-200 border-t-black animate-spin"></div>
-        <p className="text-sm font-semibold font-label-md text-slate-500">Initializing PaperHarness Core Engine...</p>
+        <p className="text-sm font-semibold font-label-md text-slate-500">Initializing OpenHarness Core Engine...</p>
       </div>
     );
   }
@@ -157,7 +157,7 @@ export default function App() {
           <div className="w-8 h-8 rounded bg-black flex items-center justify-center text-white">
             <Wallet className="w-4.5 h-4.5" />
           </div>
-          <h1 className="text-xl font-bold font-display-lg text-black select-none tracking-tight">PaperHarness</h1>
+          <h1 className="text-xl font-bold font-display-lg text-black select-none tracking-tight">OpenHarness</h1>
         </div>
 
         {/* Desktop items navigation */}
@@ -295,5 +295,6 @@ export default function App() {
       </nav>
 
     </div>
+    
   );
 }

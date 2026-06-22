@@ -4,10 +4,7 @@ import fs from "fs";
 import { createServer as createViteServer } from "vite";
 import dotenv from "dotenv";
 import mammoth from "mammoth";
-import { createRequire } from "module";
-
-const require = createRequire(import.meta.url);
-const pdf = require("pdf-parse");
+import { PDFParse } from "pdf-parse";
 
 dotenv.config();
 
@@ -31,8 +28,13 @@ app.post("/api/parse-file", async (req, res) => {
 
     if (extension === ".pdf") {
       try {
-        const data = await pdf(buffer);
-        extractedText = data.text || "";
+        const parser = new PDFParse({ data: buffer });
+        try {
+          const data = await parser.getText();
+          extractedText = data.text || "";
+        } finally {
+          await parser.destroy().catch(() => {});
+        }
       } catch (pdfErr: any) {
         console.error("PDF parse error:", pdfErr);
         return res.status(400).json({ error: `Could not parse PDF file: ${pdfErr.message}` });
@@ -421,11 +423,15 @@ app.post("/api/process", async (req, res) => {
   }
 
   // Key fallback
-  const apiKey = process.env.DEEPSEEK_API_KEY || "sk-4960ee9b8a994ba9b4687a258bb683ec";
+  const apiKey = process.env.DEEPSEEK_API_KEY;
 
   const startTime = Date.now();
 
   try {
+    if (!apiKey) {
+      throw new Error("Missing DEEPSEEK_API_KEY in environment variables. Please add your DeepSeek API key in the AI Studio Settings under Secrets.");
+    }
+
     // Make DeepSeek API Call
     const dsResponse = await fetch("https://api.deepseek.com/chat/completions", {
       method: "POST",
@@ -580,7 +586,7 @@ async function startServer() {
   }
 
   app.listen(PORT, "0.0.0.0", () => {
-    console.log(`PaperHarness Server running at http://0.0.0.0:${PORT}`);
+    console.log(`OpenHarness Server running at http://0.0.0.0:${PORT}`);
   });
 }
 
