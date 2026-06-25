@@ -115,153 +115,12 @@ function getRelativeDateString(hoursAgo: number, minutesAgoOffset: number): stri
 }
 
 // Seed data to match screens
-const SEED_JOBS: JobRecord[] = [
-  {
-    id: "#OH-9284",
-    action: "Academic Rewriting",
-    sourceName: "original_draft.pdf",
-    wordCount: 1240,
-    cost: 0.47,
-    status: "Success",
-    date: getRelativeDateString(1, 15),
-    sourceText: `Abstract\n\nThe current implementation of neural-network architectures for financial risk prediction often lacks the transparency required for institutional deployment. While these models offer high predictive accuracy, their "black box" nature prevents compliance officers from auditing the decision-making process. This research explores a hybrid approach that integrates explainable AI (XAI) modules within traditional transformer-based structures to enhance both performance and auditability.`,
-    outputText: `Abstract\n\nContemporary neural-network frameworks utilized for financial hazard forecasting frequently fall short of the bimodal methodology, synthesizing Explainable Artificial Intelligence (XAI) components with conventional transformer architectures to optimize both operational efficacy and regulatory traceability.`,
-    processingTimeMs: 42000,
-    aiRisk: 2.4,
-    similarity: 0.94
-  },
-  {
-    id: "#OH-9283",
-    action: "Summarize",
-    sourceName: "deep_learning_risks.pdf",
-    wordCount: 850,
-    cost: 0.32,
-    status: "Success",
-    date: getRelativeDateString(2, 40),
-    sourceText: "Neural networks represent complex models for predicting default probability using transactional histories.",
-    outputText: "This report summaries the application of complex predictive frameworks on loan application defaults.",
-    processingTimeMs: 22000,
-    aiRisk: 1.8,
-    similarity: 0.92
-  },
-  {
-    id: "#OH-9282",
-    action: "Enhance",
-    sourceName: "transformer_audit.pdf",
-    wordCount: 3120,
-    cost: 1.18,
-    status: "Success",
-    date: getRelativeDateString(23, 10),
-    sourceText: "Transformers achieve great benchmarks but require excessive compute budget.",
-    outputText: "While transformer platforms established unprecedented accuracy, they present massive infrastructural costs.",
-    processingTimeMs: 78000,
-    aiRisk: 5.8,
-    similarity: 0.96
-  },
-  {
-    id: "#OH-9281",
-    action: "Expand",
-    sourceName: "xai_proposal.pdf",
-    wordCount: 540,
-    cost: 0.20,
-    status: "Success",
-    date: getRelativeDateString(28, 50),
-    sourceText: "We propose explainable layers to simplify verification.",
-    outputText: "We introduce custom-designed explainable feedback layers to streamline structural verification procedures.",
-    processingTimeMs: 15000,
-    aiRisk: 3.1,
-    similarity: 0.89
-  },
-  {
-    id: "#OH-9280",
-    action: "Academic Rewriting",
-    sourceName: "credit_score.pdf",
-    wordCount: 1500,
-    cost: 0.55,
-    status: "Success",
-    date: getRelativeDateString(53, 5),
-    sourceText: "Credit risk estimation based on classical logistic regression is very robust but non-linear relations are ignored.",
-    outputText: "Conventional logistic regression algorithms for solvency prediction provide stability but are blind to multi-dimensional dependencies.",
-    processingTimeMs: 48000,
-    aiRisk: 2.9,
-    similarity: 0.95
-  },
-  {
-    id: "#OH-9279",
-    action: "Summarize",
-    sourceName: "market_anomalies.pdf",
-    wordCount: 1100,
-    cost: 0.40,
-    status: "Success",
-    date: getRelativeDateString(47, 40),
-    sourceText: "Market anomalies happen during short high-frequency intervals.",
-    outputText: "High-frequency microstructural fluctuations correlate tightly with transient liquidity shortages.",
-    processingTimeMs: 38000,
-    aiRisk: 1.9,
-    similarity: 0.91
-  },
-  {
-    id: "#OH-9278",
-    action: "Academic Rewriting",
-    sourceName: "stochastic_vol.pdf",
-    wordCount: 920,
-    cost: 0.35,
-    status: "Success",
-    date: getRelativeDateString(72, 12),
-    sourceText: "Stochastic volatility models fit fat tails better.",
-    outputText: "Stochastic asset variance formulations accurately address extreme empirical fat-tail phenomena.",
-    processingTimeMs: 31000,
-    aiRisk: 4.2,
-    similarity: 0.93
-  },
-  {
-    id: "#OH-9277",
-    action: "Enhance",
-    sourceName: "portfolio_opt.pdf",
-    wordCount: 780,
-    cost: 0.28,
-    status: "Success",
-    date: getRelativeDateString(73, 17),
-    sourceText: "Mean variance portfolio optimization is sensitive to expected returns.",
-    outputText: "Classic Mean-Variance asset allocations represent volatile topologies when subjected to return uncertainty.",
-    processingTimeMs: 29000,
-    aiRisk: 3.5,
-    similarity: 0.90
-  },
-  {
-    id: "#OH-9276",
-    action: "Expand",
-    sourceName: "liquidity_risk.pdf",
-    wordCount: 2100,
-    cost: 0.75,
-    status: "Success",
-    date: getRelativeDateString(96, 52),
-    sourceText: "We outline liquidity buffers to reduce fire sale impact.",
-    outputText: "To prevent localized liquidations from compounding into systemic runs, we formalize adaptive liquidity limits.",
-    processingTimeMs: 51000,
-    aiRisk: 5.1,
-    similarity: 0.97
-  },
-  {
-    id: "#OH-9275",
-    action: "Summarize",
-    sourceName: "systemic_run.pdf",
-    wordCount: 1600,
-    cost: 0.60,
-    status: "Success",
-    date: getRelativeDateString(100, 2),
-    sourceText: "Systemic risk arises from closely coupled credit intermediaries.",
-    outputText: "Tightly-bound financial counterparties increase contagion probability throughout interbank clearings.",
-    processingTimeMs: 43000,
-    aiRisk: 2.7,
-    similarity: 0.94
-  }
-];
+const SEED_JOBS: JobRecord[] = [];
 
 const DEFAULT_STATE: DBState = {
   dailyBudgetLimit: 10.00,
   perJobLimit: 1.00,
-  budgetUsed: 4.50, // Seeds represent exactly $4.50 (the sum of active jobs or customized seeded total cost)
+  budgetUsed: 0.00,
   budgetSaved: true, // starts with mock already configured to show state, can toggle
   isTerminated: false,
   jobs: SEED_JOBS
@@ -437,11 +296,50 @@ app.post("/api/process", async (req, res) => {
 
   try {
     let outputText = "";
-    let isDeepSeekUsed = false;
-    let isGeminiUsed = false;
+    let isApiUsed = false;
+    let providerName = "";
 
-    // 1. Try DeepSeek API if key is present
-    if (process.env.DEEPSEEK_API_KEY) {
+    // 1. Try OpenRouter API if key is present
+    if (process.env.OPENROUTER_API_KEY) {
+      try {
+        console.log("Attempting OpenRouter API completion with configured key...");
+        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
+            "HTTP-Referer": "https://ai.studio/build",
+            "X-Title": "OpenHarness"
+          },
+          body: JSON.stringify({
+            model: "deepseek/deepseek-chat",
+            messages: [
+              { role: "system", content: systemPrompt },
+              { role: "user", content: sourceText }
+            ],
+            temperature: 0.15,
+            max_tokens: 1500
+          })
+        });
+
+        if (response.ok) {
+          const resJson = await response.json();
+          outputText = resJson.choices?.[0]?.message?.content || "";
+          isApiUsed = true;
+          providerName = "OpenRouter";
+          console.log("OpenRouter API call succeeded!");
+        } else {
+          const errText = await response.text();
+          console.warn(`OpenRouter API encountered issue (Status ${response.status}): ${errText}`);
+          throw new Error(`OpenRouter error: ${errText}`);
+        }
+      } catch (orError: any) {
+        console.error("OpenRouter API failed; falling back to DeepSeek/Gemini.", orError);
+      }
+    }
+
+    // 2. Try DeepSeek API if OpenRouter didn't run or failed, and key is present
+    if (!isApiUsed && process.env.DEEPSEEK_API_KEY) {
       try {
         console.log("Attempting DeepSeek API completion with configured key...");
         const response = await fetch("https://api.deepseek.com/chat/completions", {
@@ -464,7 +362,8 @@ app.post("/api/process", async (req, res) => {
         if (response.ok) {
           const resJson = await response.json();
           outputText = resJson.choices?.[0]?.message?.content || "";
-          isDeepSeekUsed = true;
+          isApiUsed = true;
+          providerName = "DeepSeek";
           console.log("DeepSeek API call succeeded!");
         } else {
           const errText = await response.text();
@@ -476,10 +375,10 @@ app.post("/api/process", async (req, res) => {
       }
     }
 
-    // 2. Fall back to Gemini API if DeepSeek didn't run or failed
-    if (!isDeepSeekUsed) {
+    // 3. Fall back to Gemini API if neither OpenRouter nor DeepSeek succeeded
+    if (!isApiUsed) {
       if (!process.env.GEMINI_API_KEY) {
-        throw new Error("Missing both active DEEPSEEK_API_KEY and GEMINI_API_KEY in environment variables.");
+        throw new Error("Missing active API keys (OPENROUTER_API_KEY, DEEPSEEK_API_KEY, and GEMINI_API_KEY) in environment variables.");
       }
 
       console.log("Attempting Gemini API completion as secondary/fallback engine...");
@@ -494,7 +393,8 @@ app.post("/api/process", async (req, res) => {
       });
 
       outputText = response.text || "";
-      isGeminiUsed = true;
+      isApiUsed = true;
+      providerName = "Gemini";
       console.log("Gemini API call succeeded!");
     }
 
@@ -504,7 +404,7 @@ app.post("/api/process", async (req, res) => {
     let actualCost = 0.01;
     const tokenCountEstimate = Math.ceil(wordCount * 1.35) + 300; // adding prompt tokens
 
-    if (isDeepSeekUsed) {
+    if (providerName === "OpenRouter" || providerName === "DeepSeek") {
       // Inputs: DeepSeek-V3 pricing ($0.14/1M input, $0.28/1M output, highly affordable)
       const rawCost = (tokenCountEstimate * 0.000015) + (outputText.split(/\s+/).length * 0.000030);
       actualCost = parseFloat(Math.max(rawCost, 0.01).toFixed(2));
@@ -561,7 +461,7 @@ app.post("/api/process", async (req, res) => {
       success: true,
       job: newJob,
       db,
-      provider: isDeepSeekUsed ? "DeepSeek" : "Gemini"
+      provider: providerName
     });
   } catch (apiError: any) {
     console.error("Failure calling both DeepSeek and Gemini APIs; returning high-fidelity fallback:", apiError);
