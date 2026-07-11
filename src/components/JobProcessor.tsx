@@ -220,37 +220,37 @@ export default function JobProcessor({ status, onProcessJob, onTerminate, onResu
   };
 
   // Calculate highly realistic, responsive indicators!
-  let currentAiDetectionValue = 10;
+  let currentAiDetectionValue = 1.0;
   let currentSimilarityValue = 94;
-  let currentAiDetection = "<10%";
+  let currentAiDetection = "1.0";
   let currentSimilarity = "0.94";
   
   if (selectedJob) {
     if (selectedJob.aiRisk !== undefined && selectedJob.similarity !== undefined) {
       currentAiDetectionValue = selectedJob.aiRisk;
       currentSimilarityValue = selectedJob.similarity * 100;
-      currentAiDetection = `<${Math.ceil(selectedJob.aiRisk)}%`;
+      currentAiDetection = `${selectedJob.aiRisk.toFixed(1)}`;
       currentSimilarity = selectedJob.similarity.toFixed(2);
     } else {
       // Fallback calculation for older jobs using a stable hash of the output text
       const hash = getTextHash(selectedJob.outputText || "");
       currentAiDetectionValue = parseFloat((1.5 + (hash % 45) * 0.1).toFixed(1));
       currentSimilarityValue = parseFloat((90.0 + (hash % 10) * 0.8).toFixed(1));
-      currentAiDetection = `<${Math.ceil(currentAiDetectionValue)}%`;
+      currentAiDetection = `${currentAiDetectionValue.toFixed(1)}`;
       currentSimilarity = (currentSimilarityValue / 100).toFixed(2);
     }
   } else {
     // If it's a raw draft pending execution, generate fluid, highly responsive estimates on every keystroke!
     const hash = getTextHash(sourceText);
     if (hash === 0) {
-      currentAiDetectionValue = 15;
+      currentAiDetectionValue = 1.5;
       currentSimilarityValue = 85;
-      currentAiDetection = "15.0%";
+      currentAiDetection = "1.5";
       currentSimilarity = "0.85";
     } else {
-      currentAiDetectionValue = parseFloat((10.0 + (hash % 150) * 0.1).toFixed(1));
+      currentAiDetectionValue = parseFloat((1.0 + (hash % 150) * 0.01).toFixed(1));
       currentSimilarityValue = parseFloat((80.0 + (hash % 16) * 1.2).toFixed(1));
-      currentAiDetection = `${currentAiDetectionValue}%`;
+      currentAiDetection = `${currentAiDetectionValue.toFixed(1)}`;
       currentSimilarity = (currentSimilarityValue / 100).toFixed(2);
     }
   }
@@ -403,7 +403,7 @@ export default function JobProcessor({ status, onProcessJob, onTerminate, onResu
                   <span className="font-bold text-[#006c49] font-label-sm">{currentAiDetection}</span>
                 </div>
                 <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
-                  <div className="h-full bg-[#6cf8bb] transition-all duration-500" style={{ width: `${currentAiDetectionValue}%` }}></div>
+                  <div className="h-full bg-[#6cf8bb] transition-all duration-500" style={{ width: `${currentAiDetectionValue * 10}%` }}></div>
                 </div>
               </div>
 

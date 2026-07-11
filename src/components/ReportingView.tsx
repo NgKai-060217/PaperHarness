@@ -52,9 +52,9 @@ export default function ReportingView({ status }: ReportingViewProps) {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
-  // Helper to resolve stable AI Risk metrics for jobs
+  // Helper to resolve stable AI Risk metrics for jobs on a 0-10 scale
   const getJobAiRisk = (job: JobRecord) => {
-    if (job.aiRisk !== undefined) return `<${Math.ceil(job.aiRisk)}%`;
+    if (job.aiRisk !== undefined) return `${job.aiRisk.toFixed(1)}`;
     // Consistent fallback hash
     let hash = 0;
     const str = job.outputText || "";
@@ -63,7 +63,7 @@ export default function ReportingView({ status }: ReportingViewProps) {
     }
     hash = Math.abs(hash);
     const val = parseFloat((1.5 + (hash % 45) * 0.1).toFixed(1));
-    return `<${Math.ceil(val)}%`;
+    return `${val.toFixed(1)}`;
   };
 
   // Helper to resolve stable Similarity metrics for jobs
