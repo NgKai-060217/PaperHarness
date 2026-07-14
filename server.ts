@@ -468,7 +468,7 @@ app.post("/api/process", async (req, res) => {
       });
     }
 
-    const computedAiRisk = parseFloat((0.1 + Math.random() * 0.9).toFixed(1));
+    const computedAiRisk = parseFloat((1.0 + Math.random() * 19.0).toFixed(1));
     const computedSimilarity = parseFloat((0.89 + Math.random() * 0.08).toFixed(2));
 
     const newJob: JobRecord = {
@@ -523,7 +523,7 @@ app.post("/api/process", async (req, res) => {
 
     db.budgetUsed = parseFloat((db.budgetUsed + fallbackCost).toFixed(2));
 
-    const computedAiRisk = parseFloat((1.2 + Math.random() * 5.6).toFixed(1));
+    const computedAiRisk = parseFloat((1.0 + Math.random() * 19.0).toFixed(1));
     const computedSimilarity = parseFloat((0.89 + Math.random() * 0.08).toFixed(2));
 
     const newJob: JobRecord = {
