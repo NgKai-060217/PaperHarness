@@ -296,17 +296,33 @@ app.post("/api/process", async (req, res) => {
     "   - Qualified Metrics & Outcomes: Report precise quantitative findings while carefully tempering assertions with progress-based qualifiers (e.g., 'The findings indicate that, at least at this stage of research, we have achieved a [Metric] improvement in [Area] without a decrease in [Other Area]').\n" +
     "   - DO NOT copy, reference, or paraphrase details about neural networks, loan applications, financial risk, or 14% improvement; instead, apply these structural schemas, sophisticated sentence structures, and professional tone to the input text you are processing.\n";
 
+  // Style optimization rules to enforce direct, clear, highly readable prose and fix common writing flaws
+  const styleOptimizationRules =
+    "To maximize readability and visual force, you MUST strictly solve and fix these 7 specific writing flaws in your output:\n" +
+    "1. OVERLY LONG SENTENCES: Split up long sentences. Ensure each sentence is short, punchy, contains a single clear idea, and is exceptionally easy to follow.\n" +
+    "2. OVERLY COMPLEX VOCABULARY: Use simple, plain, and direct vocabulary. Avoid overly formal or complicated language that reduces readability.\n" +
+    "3. REPETITION OF IDEAS: Eliminate any redundant phrases, arguments, or repeated concepts (such as repeating general statements about productivity or technology advancement).\n" +
+    "4. LACK OF CONCRETE EXAMPLES: Avoid vague abstract statements. Include clear, detailed, and specific examples to support and clarify any claims.\n" +
+    "5. OVERLY GENERAL ARGUMENTS: Deeply develop the key points with specific, focused arguments instead of broad, shallow generalities.\n" +
+    "6. WEAK LOGICAL FLOW: Ensure strong, clear logical transitions between sentences and paragraphs so that the ideas flow naturally.\n" +
+    "7. WEAK CONCLUSION: Conclude with a strong, insightful, and memorable statement that delivers genuine value.\n";
+
   let systemPrompt = "";
   if (actionType === "Academic Rewriting") {
-    systemPrompt = "You are a human academic editor. Rewrite the following academic text to maximize formal tone, precision, and clarity, while adhering strictly to the following HUMAN_COGNITIVE_SIGNATURE rules to ensure 0% AI detection. Preserve all core facts, citations, names, data points, and academic findings perfectly, but completely rephrase the prose to be fluid, organic, and unpredictable to detection algorithms.\n\n" + humanizingRules + "\n\nStrictly output only your finished, rewritten text and absolutely nothing else. No chats, no pleasantries, and no markdown around.";
+    systemPrompt = "You are a human academic editor. Rewrite the following academic text to maximize formal tone, precision, and clarity, while adhering strictly to the following HUMAN_COGNITIVE_SIGNATURE rules and STYLE_OPTIMIZATION guidelines to ensure 0% AI detection. Preserve all core facts, citations, names, data points, and academic findings perfectly, but completely rephrase the prose to be fluid, organic, and unpredictable to detection algorithms.\n\n" + 
+      humanizingRules + "\n\n" + styleOptimizationRules + "\n\nStrictly output only your finished, rewritten text and absolutely nothing else. No chats, no pleasantries, and no markdown around.";
   } else if (actionType === "Summarize") {
-    systemPrompt = "You are a scientific researcher draft editor. Extract a clear, concise academic summary of the text provided. To bypass AI detectors (0% AI detection score), write the summary by applying the following HUMAN_COGNITIVE_SIGNATURE guidelines. Focus purely on key structural models, datasets, and quantitative findings, but write the response in highly bursty, non-uniform human prose.\n\n" + humanizingRules + "\n\nOutput only the summarized text directly, with no extra commentary.";
+    systemPrompt = "You are a scientific researcher draft editor. Extract a clear, concise academic summary of the text provided. To bypass AI detectors (0% AI detection score), write the summary by applying the following HUMAN_COGNITIVE_SIGNATURE guidelines and STYLE_OPTIMIZATION guidelines. Focus purely on key structural models, datasets, and quantitative findings, but write the response in highly bursty, non-uniform human prose.\n\n" + 
+      humanizingRules + "\n\n" + styleOptimizationRules + "\n\nOutput only the summarized text directly, with no extra commentary.";
   } else if (actionType === "Enhance") {
-    systemPrompt = "You are a senior journal proofreader. Improve the readability, flow, and grammatical accuracy of the text, elevating its vocabulary while sustaining high auditability. You must apply the following HUMAN_COGNITIVE_SIGNATURE guidelines to make sure the polished text is fully undetectable and gets a 0% AI score. Maintain all original technical arguments and names.\n\n" + humanizingRules + "\n\nOutput the enhanced text directly with no extra commentary.";
+    systemPrompt = "You are a senior journal proofreader. Improve the readability, flow, and grammatical accuracy of the text, elevating its vocabulary while sustaining high auditability. You must apply the following HUMAN_COGNITIVE_SIGNATURE guidelines and STYLE_OPTIMIZATION guidelines to make sure the polished text is fully undetectable and gets a 0% AI score. Maintain all original technical arguments and names.\n\n" + 
+      humanizingRules + "\n\n" + styleOptimizationRules + "\n\nOutput the enhanced text directly with no extra commentary.";
   } else if (actionType === "Expand") {
-    systemPrompt = "You are an academic scholar. Elaborate and unpack the provided concepts in detail, adding formal context, technical definitions, and clarifying theoretical frameworks where beneficial. You must apply the following HUMAN_COGNITIVE_SIGNATURE guidelines to guarantee the expanded text looks 100% human-authored and scores 0% on AI detection tests.\n\n" + humanizingRules + "\n\nOutput the expanded text directly with no extra commentary.";
+    systemPrompt = "You are an academic scholar. Elaborate and unpack the provided concepts in detail, adding formal context, technical definitions, and clarifying theoretical frameworks where beneficial. You must apply the following HUMAN_COGNITIVE_SIGNATURE guidelines and STYLE_OPTIMIZATION guidelines to guarantee the expanded text looks 100% human-authored and scores 0% on AI detection tests.\n\n" + 
+      humanizingRules + "\n\n" + styleOptimizationRules + "\n\nOutput the expanded text directly with no extra commentary.";
   } else {
-    systemPrompt = "You are a precise professional academic rewriter. Rewrite this work in state-of-the-art formal terminology. Write in a highly natural, varied human voice with diverse sentence structures to ensure it gets 0% on AI detection tests. Use the following guidelines:\n\n" + humanizingRules + "\n\nOutput only the rewritten text directly with no extra commentary.";
+    systemPrompt = "You are a precise professional academic rewriter. Rewrite this work in state-of-the-art formal terminology. Write in a highly natural, varied human voice with diverse sentence structures to ensure it gets 0% on AI detection tests. Use the following guidelines:\n\n" + 
+      humanizingRules + "\n\n" + styleOptimizationRules + "\n\nOutput only the rewritten text directly with no extra commentary.";
   }
 
   const startTime = Date.now();
@@ -483,7 +499,10 @@ app.post("/api/process", async (req, res) => {
   } catch (apiError: any) {
     console.error("Failure calling both DeepSeek and Gemini APIs; returning high-fidelity fallback:", apiError);
     const durationMs = Date.now() - startTime;
-    const fallbackText = `[DEMO MODE FALLBACK - API EXCEPTION: ${apiError.message}]\n\nContemporary neural-network frameworks utilized for financial hazard forecasting frequently fall short of the bimodal methodology constraints. Despite superior predictive precision, the inherent opacity of these systems precludes rigorous auditing by regulatory compliance authorities under standard protocols.\n\nIndeed, applying a structured, explainable transformer layer significantly optimizes both operational efficacy and regulatory traceability within academic thresholds.`;
+    let fallbackText = `[DEMO MODE FALLBACK - API EXCEPTION: ${apiError.message}]\n\nContemporary neural-network frameworks utilized for financial hazard forecasting frequently fall short of the bimodal methodology constraints. Despite superior predictive precision, the inherent opacity of these systems precludes rigorous auditing by regulatory compliance authorities under standard protocols.\n\nIndeed, applying a structured, explainable transformer layer significantly optimizes both operational efficacy and regulatory traceability within academic thresholds.`;
+    if (actionType === "Plain & Direct Style") {
+      fallbackText = `[DEMO MODE FALLBACK - API EXCEPTION: ${apiError.message}]\n\nMany financial risk prediction models are highly accurate but operate as complex "black boxes." This lack of transparency makes it extremely difficult for compliance officers to audit their decisions or explain their outputs.\n\nTo solve this, we can integrate explainable AI (XAI) modules directly into standard transformer structures. This simple change maintains high predictive power while giving regulators clear, step-by-step reasoning that is easy to follow.`;
+    }
 
     const fallbackCost = parseFloat(Math.max((0.005 + (wordCount * 0.000005)), 0.01).toFixed(2));
     
