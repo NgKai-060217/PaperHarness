@@ -278,51 +278,61 @@ app.post("/api/process", async (req, res) => {
   const fileName = sourceName || "original_draft.pdf";
   const wordCount = sourceText.split(/\s+/).filter(Boolean).length;
 
-  // Let's configure system prompts with highly humanized instructions to bypass AI detectors completely (0% AI risk).
-  const humanizingRules = 
-    "To achieve an absolute 100% human-written score (0% AI detection) on all external AI detectors (like GPTZero, Turnitin, Copyleaks, and Originality), you MUST mimic authentic human cognitive patterns and slight stylistic quirks:\n" +
-    "1. INJECT SLIGHTLY UNNATURAL / QUIRKY / UNCONVENTIONAL WORD PATTERNS: Humans do not write with sterile, perfectly predictable machine cadence. You can use slightly unexpected, slightly quirky, or uniquely structured word orders and conversational/idiomatic constructions (for example, structures like 'what this is to say is...', 'the goal is to...', 'this boils down to...', or inserting minor natural sentence-starting conjunctions). The meaning must remain 100% identical and accurate, but the wording should feel slightly personalized and less predictable. Do not over-polish the grammar into generic, ultra-clean robotic sequences.\n" +
-    "2. USE NATURAL RECURSION AND COMMON LINKING WORDS: Intentionally incorporate natural occurrences of common, simple linking words and helper verbs like 'the', 'is', 'and' to break standard AI signature formulas. For instance, write in a style that is slightly more explanatory by inserting simple phrases like 'and the reason is', 'the fact of the matter is that', or 'and what this is' to purposefully introduce natural human verbal rhythm, lowering detection risk to the absolute minimum while maintaining exact semantic equivalence.\n" +
-    "3. HIGH BURSTINESS (Extreme Sentence Length Contrast): Never write multiple sentences of similar length consecutively. Forcefully alternate very short, punchy statements (3 to 7 words) with complex, multi-clause explanations (25+ words) and occasional medium sentences. This chaotic sentence length variation is the primary indicator of human writing.\n" +
-    "4. HIGH PERPLEXITY (Unpredictable Vocabulary & Synonyms): Swap out high-probability, common AI verbs and transitions for rare, precise, or slightly unusual synonyms that fit the context perfectly (e.g., instead of 'this research explores', write 'we scoured' or 'our query focused on'). Avoid high-probability word sequences.\n" +
-    "5. ABSOLUTE BAN ON AI BUZZWORDS: Never use 'delve', 'testament', 'tapestry', 'furthermore', 'moreover', 'pivotal', 'groundbreaking', 'cutting-edge', 'revolutionary', 'notably', 'in conclusion', 'first and foremost', 'demystify', 'foster', 'unravel', 'robust', 'seamless', 'leverage', 'resonate', 'holistic', 'beacon'.\n" +
-    "6. STYLISTIC IRREGULARITIES: Natural human writing contains unique syntactic habits. Use em-dashes (—) for parenthetical thoughts, include occasional conversational transitions (e.g. starting a sentence with 'And', 'But', 'Yet', or 'Still'), and vary punctuation style dynamically.\n" +
-    "7. CONTINUOUS NATURAL PROSE: Avoid perfectly uniform, symmetric paragraphs or rigid lists. Let ideas flow organically, with slightly irregular paragraph transitions, to make the structure look completely handwritten.\n" +
-    "8. EMPIRICAL ACADEMIC STRUCTURE AND RIGOR (EMULATION REFERENCE): Establish absolute scholarly credibility and eliminate robotic markers by emulating the objective tone, logical structure, sentence variation, and analytical flow of top-tier academic prose:\n" +
-    "   - Introduce foundational challenges directly and with constructive skepticism (e.g., 'The use of [Subject] is limited by [Deficit] and [Systemic Obstacles]').\n" +
-    "   - Direct Contrast & Operational Boundaries: Contrast high performance with operational or compliance constraints to present balanced arguments (e.g., 'Although [Subject] shows [High Performance], its [Inherent Defect] does not permit [Stakeholders] to [Critical Task]').\n" +
-    "   - Stating Scope & Objectives: Formulate concise scope declarations (e.g., 'This [Work Type] examines the implications of combining [Component A] with [Component B]').\n" +
-    "   - Methodological & Quantitative Precision: Declare datasets, sample sizes, and empirical workflows directly and clearly (e.g., 'We employ a sample of [Sample Size] in order to test [Performance] of our proposed [Model Name] model.').\n" +
-    "   - Qualified Metrics & Outcomes: Report precise quantitative findings while carefully tempering assertions with progress-based qualifiers (e.g., 'The findings indicate that, at least at this stage of research, we have achieved a [Metric] improvement in [Area] without a decrease in [Other Area]').\n" +
-    "   - DO NOT copy, reference, or paraphrase details about neural networks, loan applications, financial risk, or 14% improvement; instead, apply these structural schemas, sophisticated sentence structures, and professional tone to the input text you are processing.\n";
-
-  // Style optimization rules to enforce direct, clear, highly readable prose and fix common writing flaws
-  const styleOptimizationRules =
-    "To maximize readability and visual force, you MUST strictly solve and fix these 7 specific writing flaws in your output:\n" +
-    "1. OVERLY LONG SENTENCES: Split up long sentences. Ensure each sentence is short, punchy, contains a single clear idea, and is exceptionally easy to follow.\n" +
-    "2. OVERLY COMPLEX VOCABULARY: Use simple, plain, and direct vocabulary. Avoid overly formal or complicated language that reduces readability.\n" +
-    "3. REPETITION OF IDEAS: Eliminate any redundant phrases, arguments, or repeated concepts (such as repeating general statements about productivity or technology advancement).\n" +
-    "4. LACK OF CONCRETE EXAMPLES: Avoid vague abstract statements. Include clear, detailed, and specific examples to support and clarify any claims.\n" +
-    "5. OVERLY GENERAL ARGUMENTS: Deeply develop the key points with specific, focused arguments instead of broad, shallow generalities.\n" +
-    "6. WEAK LOGICAL FLOW: Ensure strong, clear logical transitions between sentences and paragraphs so that the ideas flow naturally.\n" +
-    "7. WEAK CONCLUSION: Conclude with a strong, insightful, and memorable statement that delivers genuine value.\n";
+  // Strict Style 2 academic style rules based on user's custom Keep and Change criteria:
+  const styleTwoRules =
+    "You MUST strictly structure and write the entire output to conform with 'Style 2'. This is a highly formal, academic, and structured writing style characterized by these specific Keep/Change guidelines:\n\n" +
+    "--- ❌ 需要改变的部分 (WHAT TO CHANGE) ---\n" +
+    "1. 句子结构 (Sentence Structure):\n" +
+    "   - 增加句子的复杂度。使用更长、包含多个从句的学术句子。避免过多简单短句。\n" +
+    "   - ❌ Example: AI tools help students write.\n" +
+    "   - ✅ Example: AI tools facilitate academic writing enhancement by providing structured linguistic support for student researchers.\n" +
+    "2. 词汇正式程度 (Vocabulary Formality):\n" +
+    "   - 使用更高级、更学术的词汇。避免普通日常用词。遵循以下词汇转换规则：\n" +
+    "     * help -> facilitate\n" +
+    "     * improve -> enhance\n" +
+    "     * use -> utilize\n" +
+    "     * change -> transform\n" +
+    "     * problem -> challenge\n" +
+    "     * write -> generate scholarly written outputs\n" +
+    "     * students -> student populations / learners\n" +
+    "3. 学术语气 (Academic Tone):\n" +
+    "   - 使用更加正式、研究论文式的表达。避免口语化表达。\n" +
+    "   - ❌ Example: This is a big problem.\n" +
+    "   - ✅ Example: This introduces significant challenges within academic evaluation frameworks.\n" +
+    "4. 被动语态 (Passive Voice):\n" +
+    "   - 增加适量被动结构。强调系统、方法、流程，而不是个人。\n" +
+    "   - ❌ Example: The system uses Google AI Studio.\n" +
+    "   - ✅ Example: Google AI Studio is utilized as the primary computational processing service.\n" +
+    "5. 学术连接词 (Academic Connectors):\n" +
+    "   - 增加逻辑连接词，让文章更像研究论文。在句首或从句中积极使用：Furthermore, Moreover, Consequently, Therefore, Accordingly, Within this framework。\n" +
+    "6. 抽象学术表达 (Abstract Academic Expressions):\n" +
+    "   - 使用更研究化的表达方式。避免简单、具体的描述。\n" +
+    "   - ❌ Example: help ESL students improve writing\n" +
+    "   - ✅ Example: facilitate academic writing enhancement among ESL learners\n" +
+    "7. 研究导向表达 (Research-Oriented Presentation):\n" +
+    "   - 强调：methodology, framework, system, architecture, implementation, evaluation。避免像普通说明文。\n\n" +
+    "--- ✅ 需要保留的部分 (WHAT TO KEEP) ---\n" +
+    "1. 内容 (Content): Preserve all original facts, citations, names, data points, and academic findings perfectly without distortion or omission.\n" +
+    "2. 结构 (Research structure): Retain a rigorous scholarly framework, research logic, and well-designed organizational flow.\n" +
+    "3. 专业词汇 (Technical terms): Keep all specialized domain terminology, domain-specific names, and precise technical concepts.\n" +
+    "4. 学术语气 (Academic tone): Sustain a completely objective, non-emotional, evidence-backed, and neutral scholarly tone.\n";
 
   let systemPrompt = "";
   if (actionType === "Academic Rewriting") {
-    systemPrompt = "You are a human academic editor. Rewrite the following academic text to maximize formal tone, precision, and clarity, while adhering strictly to the following HUMAN_COGNITIVE_SIGNATURE rules and STYLE_OPTIMIZATION guidelines to ensure 0% AI detection. Preserve all core facts, citations, names, data points, and academic findings perfectly, but completely rephrase the prose to be fluid, organic, and unpredictable to detection algorithms.\n\n" + 
-      humanizingRules + "\n\n" + styleOptimizationRules + "\n\nStrictly output only your finished, rewritten text and absolutely nothing else. No chats, no pleasantries, and no markdown around.";
+    systemPrompt = "You are a professional academic editor. Rewrite the following text to fully conform to 'Style 2' academic style, adhering strictly to the provided Keep/Change guidelines. Preserve all core facts, citations, names, data points, and findings perfectly, but completely rephrase the prose to make it dense, highly formal, complex, and scholarly.\n\n" + 
+      styleTwoRules + "\n\nStrictly output only your finished, rewritten text and absolutely nothing else. No chats, no pleasantries, and no markdown around.";
   } else if (actionType === "Summarize") {
-    systemPrompt = "You are a scientific researcher draft editor. Extract a clear, concise academic summary of the text provided. To bypass AI detectors (0% AI detection score), write the summary by applying the following HUMAN_COGNITIVE_SIGNATURE guidelines and STYLE_OPTIMIZATION guidelines. Focus purely on key structural models, datasets, and quantitative findings, but write the response in highly bursty, non-uniform human prose.\n\n" + 
-      humanizingRules + "\n\n" + styleOptimizationRules + "\n\nOutput only the summarized text directly, with no extra commentary.";
+    systemPrompt = "You are a scientific researcher. Extract a clear, dense academic summary of the provided text, written strictly in accordance with 'Style 2' academic guidelines.\n\n" + 
+      styleTwoRules + "\n\nOutput only the summarized text directly, with no extra commentary, introductory remarks, or markdown.";
   } else if (actionType === "Enhance") {
-    systemPrompt = "You are a senior journal proofreader. Improve the readability, flow, and grammatical accuracy of the text, elevating its vocabulary while sustaining high auditability. You must apply the following HUMAN_COGNITIVE_SIGNATURE guidelines and STYLE_OPTIMIZATION guidelines to make sure the polished text is fully undetectable and gets a 0% AI score. Maintain all original technical arguments and names.\n\n" + 
-      humanizingRules + "\n\n" + styleOptimizationRules + "\n\nOutput the enhanced text directly with no extra commentary.";
+    systemPrompt = "You are a senior journal editor. Enhance, proofread, and elevate the provided text to maximize academic formality, complexity, and structural rigor using 'Style 2' rules.\n\n" + 
+      styleTwoRules + "\n\nOutput the enhanced text directly with no extra commentary, introductory remarks, or markdown.";
   } else if (actionType === "Expand") {
-    systemPrompt = "You are an academic scholar. Elaborate and unpack the provided concepts in detail, adding formal context, technical definitions, and clarifying theoretical frameworks where beneficial. You must apply the following HUMAN_COGNITIVE_SIGNATURE guidelines and STYLE_OPTIMIZATION guidelines to guarantee the expanded text looks 100% human-authored and scores 0% on AI detection tests.\n\n" + 
-      humanizingRules + "\n\n" + styleOptimizationRules + "\n\nOutput the expanded text directly with no extra commentary.";
+    systemPrompt = "You are a scholarly writer. Elaborate, expand, and unpack the provided concepts in detail, adding formal context, technical definitions, and clarifying theoretical frameworks using 'Style 2' rules.\n\n" + 
+      styleTwoRules + "\n\nOutput the expanded text directly with no extra commentary, introductory remarks, or markdown.";
   } else {
-    systemPrompt = "You are a precise professional academic rewriter. Rewrite this work in state-of-the-art formal terminology. Write in a highly natural, varied human voice with diverse sentence structures to ensure it gets 0% on AI detection tests. Use the following guidelines:\n\n" + 
-      humanizingRules + "\n\n" + styleOptimizationRules + "\n\nOutput only the rewritten text directly with no extra commentary.";
+    systemPrompt = "You are a precise academic rewriter. Rewrite the provided text strictly in accordance with 'Style 2' academic style.\n\n" + 
+      styleTwoRules + "\n\nOutput only the rewritten text directly with no extra commentary, introductory remarks, or markdown.";
   }
 
   const startTime = Date.now();
@@ -332,10 +342,32 @@ app.post("/api/process", async (req, res) => {
     let isApiUsed = false;
     let providerName = "";
 
-    // 1. Try OpenRouter API if key is present
-    if (process.env.OPENROUTER_API_KEY) {
+    // 1. Try Gemini API first (Google AI Studio API Key)
+    if (process.env.GEMINI_API_KEY) {
       try {
-        console.log("Attempting OpenRouter API completion with configured key...");
+        console.log("Attempting Google AI Studio Gemini API completion with configured key...");
+        const response = await ai.models.generateContent({
+          model: "gemini-3.6-flash",
+          contents: sourceText,
+          config: {
+            systemInstruction: systemPrompt,
+            temperature: 0.9,
+          },
+        });
+
+        outputText = response.text || "";
+        isApiUsed = true;
+        providerName = "Gemini (AI Studio)";
+        console.log("Google AI Studio Gemini API call succeeded!");
+      } catch (geminiError: any) {
+        console.error("Google AI Studio Gemini API failed; falling back to secondary providers if configured.", geminiError);
+      }
+    }
+
+    // 2. Fallback to OpenRouter API if Gemini failed or key missing, and key is present
+    if (!isApiUsed && process.env.OPENROUTER_API_KEY) {
+      try {
+        console.log("Attempting OpenRouter API completion as fallback...");
         const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
           method: "POST",
           headers: {
@@ -360,21 +392,21 @@ app.post("/api/process", async (req, res) => {
           outputText = resJson.choices?.[0]?.message?.content || "";
           isApiUsed = true;
           providerName = "OpenRouter";
-          console.log("OpenRouter API call succeeded!");
+          console.log("OpenRouter API fallback call succeeded!");
         } else {
           const errText = await response.text();
           console.warn(`OpenRouter API encountered issue (Status ${response.status}): ${errText}`);
           throw new Error(`OpenRouter error: ${errText}`);
         }
       } catch (orError: any) {
-        console.error("OpenRouter API failed; falling back to DeepSeek/Gemini.", orError);
+        console.error("OpenRouter API fallback failed.", orError);
       }
     }
 
-    // 2. Try DeepSeek API if OpenRouter didn't run or failed, and key is present
+    // 3. Fallback to DeepSeek API if preceding providers failed, and key is present
     if (!isApiUsed && process.env.DEEPSEEK_API_KEY) {
       try {
-        console.log("Attempting DeepSeek API completion with configured key...");
+        console.log("Attempting DeepSeek API completion as fallback...");
         const response = await fetch("https://api.deepseek.com/chat/completions", {
           method: "POST",
           headers: {
@@ -397,38 +429,19 @@ app.post("/api/process", async (req, res) => {
           outputText = resJson.choices?.[0]?.message?.content || "";
           isApiUsed = true;
           providerName = "DeepSeek";
-          console.log("DeepSeek API call succeeded!");
+          console.log("DeepSeek API fallback call succeeded!");
         } else {
           const errText = await response.text();
           console.warn(`DeepSeek API encountered issue (Status ${response.status}): ${errText}`);
           throw new Error(`DeepSeek error: ${errText}`);
         }
       } catch (dsError: any) {
-        console.error("DeepSeek API failed; falling back to Gemini API execution.", dsError);
+        console.error("DeepSeek API fallback failed.", dsError);
       }
     }
 
-    // 3. Fall back to Gemini API if neither OpenRouter nor DeepSeek succeeded
     if (!isApiUsed) {
-      if (!process.env.GEMINI_API_KEY) {
-        throw new Error("Missing active API keys (OPENROUTER_API_KEY, DEEPSEEK_API_KEY, and GEMINI_API_KEY) in environment variables.");
-      }
-
-      console.log("Attempting Gemini API completion as secondary/fallback engine...");
-      // Make Gemini API Call using modern @google/genai SDK
-      const response = await ai.models.generateContent({
-        model: "gemini-3.5-flash",
-        contents: sourceText,
-        config: {
-          systemInstruction: systemPrompt,
-          temperature: 0.9,
-        },
-      });
-
-      outputText = response.text || "";
-      isApiUsed = true;
-      providerName = "Gemini";
-      console.log("Gemini API call succeeded!");
+      throw new Error("Missing active API keys or API requests failed. Please ensure GEMINI_API_KEY is configured in your secrets.");
     }
 
     const durationMs = Date.now() - startTime;
@@ -499,10 +512,7 @@ app.post("/api/process", async (req, res) => {
   } catch (apiError: any) {
     console.error("Failure calling both DeepSeek and Gemini APIs; returning high-fidelity fallback:", apiError);
     const durationMs = Date.now() - startTime;
-    let fallbackText = `[DEMO MODE FALLBACK - API EXCEPTION: ${apiError.message}]\n\nContemporary neural-network frameworks utilized for financial hazard forecasting frequently fall short of the bimodal methodology constraints. Despite superior predictive precision, the inherent opacity of these systems precludes rigorous auditing by regulatory compliance authorities under standard protocols.\n\nIndeed, applying a structured, explainable transformer layer significantly optimizes both operational efficacy and regulatory traceability within academic thresholds.`;
-    if (actionType === "Plain & Direct Style") {
-      fallbackText = `[DEMO MODE FALLBACK - API EXCEPTION: ${apiError.message}]\n\nMany financial risk prediction models are highly accurate but operate as complex "black boxes." This lack of transparency makes it extremely difficult for compliance officers to audit their decisions or explain their outputs.\n\nTo solve this, we can integrate explainable AI (XAI) modules directly into standard transformer structures. This simple change maintains high predictive power while giving regulators clear, step-by-step reasoning that is easy to follow.`;
-    }
+    const fallbackText = `[DEMO MODE FALLBACK - API EXCEPTION: ${apiError.message}]\n\nContemporary neural-network frameworks utilized for financial hazard forecasting frequently fall short of the bimodal methodology constraints. Despite superior predictive precision, the inherent opacity of these systems precludes rigorous auditing by regulatory compliance authorities under standard protocols.\n\nFurthermore, applying a structured, explainable transformer layer significantly optimizes both operational efficacy and regulatory traceability. Therefore, it is suggested that such methodologies should be prioritized to reduce systemic opacity within academic thresholds.`;
 
     const fallbackCost = parseFloat(Math.max((0.005 + (wordCount * 0.000005)), 0.01).toFixed(2));
     
