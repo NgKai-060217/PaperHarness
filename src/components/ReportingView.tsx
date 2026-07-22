@@ -199,21 +199,21 @@ export default function ReportingView({ status }: ReportingViewProps) {
         
         <div className="lg:col-span-2 space-y-3">
           <div className="space-y-1">
-            <h2 className="text-2xl font-bold font-display-lg text-black">Financial Audit &amp; Performance</h2>
-            <p className="text-slate-500 text-sm font-body-sm">
+            <h2 className="text-2xl font-extrabold font-display-lg text-white tracking-tight">Financial Audit &amp; Performance</h2>
+            <p className="text-slate-400 text-sm font-body-sm">
               Real-time visual monitoring of computation budget spends, resource usage, and gateway compliance thresholds.
             </p>
           </div>
           
           <div className="flex flex-wrap items-center gap-2 pt-1">
             <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider font-label-sm">Auditing Scope:</span>
-            <div className="inline-flex gap-1.5 bg-slate-150 p-1 rounded-xl border border-slate-200/50">
+            <div className="inline-flex gap-1.5 bg-[#121827] p-1 rounded-xl border border-slate-800">
               <button 
                 onClick={() => { setViewMode("user"); setCurrentPage(1); }}
                 className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all font-label-md cursor-pointer ${
                   viewMode === "user" 
-                    ? "glass-btn-emerald" 
-                    : "glass-btn-secondary"
+                    ? "glass-btn-emerald shadow-sm" 
+                    : "text-slate-400 hover:text-slate-200"
                 }`}
               >
                 True User Activities
@@ -222,8 +222,8 @@ export default function ReportingView({ status }: ReportingViewProps) {
                 onClick={() => { setViewMode("all"); setCurrentPage(1); }}
                 className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all font-label-md cursor-pointer ${
                   viewMode === "all" 
-                    ? "glass-btn-emerald" 
-                    : "glass-btn-secondary"
+                    ? "glass-btn-emerald shadow-sm" 
+                    : "text-slate-400 hover:text-slate-200"
                 }`}
               >
                 Benchmark Logs (All)
@@ -232,17 +232,17 @@ export default function ReportingView({ status }: ReportingViewProps) {
           </div>
         </div>
 
-        <div className="bg-white border border-slate-200 rounded-xl p-4 flex flex-col justify-center space-y-2.5">
+        <div className="bg-[#121827] border border-slate-800 rounded-2xl p-4 flex flex-col justify-center space-y-2.5 shadow-xl">
           <div className="flex items-center justify-between text-xs">
             <span className="font-bold text-slate-400 uppercase tracking-wider font-label-sm">Total Budget Used</span>
-            <span className="font-bold text-black font-label-md">
+            <span className="font-bold text-slate-200 font-label-md">
               ${totalCost.toFixed(2)} / ${budgetCap.toFixed(2)}
             </span>
           </div>
-          <div className="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+          <div className="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
             <div 
               className={`h-full transition-all duration-500 ${
-                progressPercent > 90 ? "bg-red-500" : "bg-[#006c49]"
+                progressPercent > 90 ? "bg-rose-500" : "bg-gradient-to-r from-indigo-500 to-emerald-400"
               }`} 
               style={{ width: `${progressPercent}%` }}
             ></div>
@@ -255,55 +255,56 @@ export default function ReportingView({ status }: ReportingViewProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         
         {/* Card 1: Jobs Processed */}
-        <div className="bg-white border border-slate-200 p-5 rounded-xl flex flex-col justify-between">
+        <div className="bg-[#121827] border border-slate-800 p-5 rounded-2xl flex flex-col justify-between shadow-xl">
           <div>
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider font-label-sm">Jobs Processed</span>
-            <span className="block text-3xl font-bold text-black mt-1 font-display-lg">{totalJobsCount}</span>
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-label-sm">Jobs Processed</span>
+            <span className="block text-3xl font-extrabold text-white mt-1 font-display-lg">{totalJobsCount}</span>
           </div>
-          <div className="mt-2 flex items-center text-[#006c49] text-xs font-semibold">
-            <TrendingUp className="w-4 h-4 mr-1 text-[#006c49]" />
+          <div className="mt-3 flex items-center text-emerald-400 text-xs font-semibold">
+            <TrendingUp className="w-4 h-4 mr-1 text-emerald-400" />
             <span>+2 since deployment</span>
           </div>
         </div>
 
         {/* Card 2: Success Rate */}
-        <div className="bg-white border border-slate-200 p-5 rounded-xl flex flex-col justify-between">
+        <div className="bg-[#121827] border border-slate-800 p-5 rounded-2xl flex flex-col justify-between shadow-xl">
           <div>
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider font-label-sm">Success Rate</span>
-            <span className="block text-3xl font-bold text-[#006c49] mt-1 font-display-lg">100%</span>
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-label-sm">Success Rate</span>
+            <span className="block text-3xl font-extrabold text-emerald-400 mt-1 font-display-lg">100%</span>
           </div>
-          <div className="mt-2 flex items-center text-slate-500 text-xs font-medium">
-            <CheckCircle className="w-4 h-4 mr-1 text-[#006c49]" />
+          <div className="mt-3 flex items-center text-slate-400 text-xs font-medium">
+            <CheckCircle className="w-4 h-4 mr-1 text-emerald-400" />
             <span>Zero processing halts</span>
           </div>
         </div>
 
         {/* Card 3: Avg. Cost */}
-        <div className="bg-white border border-slate-200 p-5 rounded-xl flex flex-col justify-between">
+        <div className="bg-[#121827] border border-slate-800 p-5 rounded-2xl flex flex-col justify-between shadow-xl">
           <div>
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider font-label-sm">Avg. Cost</span>
-            <span className="block text-3xl font-bold text-black mt-1 font-display-lg">${avgCostPer1000.toFixed(2)}</span>
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-label-sm">Avg. Cost</span>
+            <span className="block text-3xl font-extrabold text-white mt-1 font-display-lg">${avgCostPer1000.toFixed(2)}</span>
           </div>
-          <div className="mt-2 flex items-center text-slate-500 text-xs font-medium">
-            <Sliders className="w-4 h-4 mr-1 text-slate-400" />
+          <div className="mt-3 flex items-center text-slate-400 text-xs font-medium">
+            <Sliders className="w-4 h-4 mr-1 text-indigo-400" />
             <span>Evaluated per 1k words</span>
           </div>
         </div>
 
         {/* Card 4: Compliance Checklist */}
-        <div className="bg-[#131b2e] text-white p-5 rounded-xl flex flex-col justify-between border border-black shadow-xs">
-          <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider font-label-sm">Compliance Safety</span>
+        <div className="bg-gradient-to-br from-indigo-950/60 via-[#121827] to-[#0d1322] text-white p-5 rounded-2xl flex flex-col justify-between border border-indigo-500/30 shadow-xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/10 rounded-full blur-xl pointer-events-none"></div>
+          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-label-sm">Compliance Safety</span>
           <ul className="space-y-2 mt-2">
             <li className="flex items-center gap-2 text-xs font-semibold">
-              <Shield className="w-4 h-4 text-[#6cf8bb]" />
+              <Shield className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>Budget Limits: SAFE</span>
             </li>
             <li className="flex items-center gap-2 text-xs font-semibold">
-              <Shield className="w-4 h-4 text-[#6cf8bb]" />
+              <Shield className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>Emergency Core: ONLINE</span>
             </li>
             <li className="flex items-center gap-2 text-xs font-semibold">
-              <Shield className="w-4 h-4 text-[#6cf8bb]" />
+              <Shield className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>Scale-To-Zero: STABLE</span>
             </li>
           </ul>
@@ -315,21 +316,21 @@ export default function ReportingView({ status }: ReportingViewProps) {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* consumption bar chart */}
-        <div className="lg:col-span-8 bg-white border border-slate-200 p-6 rounded-xl">
+        <div className="lg:col-span-8 bg-[#121827] border border-slate-800 p-6 rounded-2xl shadow-xl">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
             <div>
-              <h3 className="text-lg font-bold text-black font-display-lg">Daily Consumption</h3>
-              <p className="text-slate-500 text-xs font-body-sm leading-relaxed">
+              <h3 className="text-base font-extrabold text-white font-display-lg">Daily Consumption</h3>
+              <p className="text-slate-400 text-xs font-body-sm leading-relaxed">
                 Estimated credit expenditure over the preceding 7 days (USD).
               </p>
             </div>
-            <div className="flex gap-1.5 text-xs font-semibold">
-              <button className="px-3.5 py-1.5 glass-btn-secondary rounded-lg font-label-sm">Daily</button>
-              <button className="px-3.5 py-1.5 glass-btn-primary rounded-lg font-label-sm font-bold">Weekly</button>
+            <div className="flex gap-1.5 text-xs font-bold">
+              <button className="px-3.5 py-1.5 text-slate-400 hover:text-slate-200 rounded-lg font-label-sm cursor-pointer">Daily</button>
+              <button className="px-3.5 py-1.5 glass-btn-primary rounded-lg font-label-sm font-bold shadow-sm cursor-pointer">Weekly</button>
             </div>
           </div>
 
-          <div className="relative h-64 flex items-end justify-between gap-4 pt-6 pl-10 border-b border-l border-slate-100">
+          <div className="relative h-64 flex items-end justify-between gap-4 pt-6 pl-10 border-b border-l border-slate-800">
             {/* simple elegant pure css responsive columns bar graph */}
             {last7DaysData.map((bar, idx) => {
               const heightPercentage = Math.round((bar.costNum / maxDayCost) * 85); // up to 85% height
@@ -338,13 +339,13 @@ export default function ReportingView({ status }: ReportingViewProps) {
                 <div key={idx} className="flex-1 flex flex-col items-center gap-2 group relative">
                   
                   {/* popup values on hover */}
-                  <div className="absolute -top-8 bg-[#131b2e] text-white text-[10px] py-1 px-1.5 rounded opacity-0 group-hover:opacity-100 transition-all pointer-events-none scale-90 group-hover:scale-100 font-label-md whitespace-nowrap z-10">
+                  <div className="absolute -top-8 bg-slate-900 border border-slate-700 text-white text-[10px] py-1 px-2 rounded-md opacity-0 group-hover:opacity-100 transition-all pointer-events-none scale-90 group-hover:scale-100 font-label-md whitespace-nowrap z-10 shadow-lg">
                     {bar.cost} ({bar.label})
                   </div>
 
                   <div 
-                    className={`w-full transition-all duration-550 rounded-t-sm hover:opacity-90 ${
-                      bar.isToday ? "bg-[#006c49]" : "bg-[#131b2e]"
+                    className={`w-full transition-all duration-500 rounded-t-lg hover:opacity-90 ${
+                      bar.isToday ? "bg-gradient-to-t from-emerald-500 to-teal-400 shadow-md shadow-emerald-500/20" : "bg-gradient-to-t from-indigo-600 to-violet-500"
                     }`} 
                     style={{ height: heightValue }}
                   ></div>
@@ -354,7 +355,7 @@ export default function ReportingView({ status }: ReportingViewProps) {
             })}
 
             {/* Dynamic Y-axis helper thresholds */}
-            <div className="absolute left-1 inset-y-0 flex flex-col justify-between text-[9px] font-bold text-slate-400 font-label-sm pt-4">
+            <div className="absolute left-1 inset-y-0 flex flex-col justify-between text-[9px] font-bold text-slate-500 font-label-sm pt-4">
               <span>${(maxDayCost > 2.0 ? maxDayCost : 2.0).toFixed(1)}</span>
               <span>${((maxDayCost > 2.0 ? maxDayCost : 2.0) * 0.75).toFixed(1)}</span>
               <span>${((maxDayCost > 2.0 ? maxDayCost : 2.0) * 0.5).toFixed(1)}</span>
@@ -366,9 +367,9 @@ export default function ReportingView({ status }: ReportingViewProps) {
         </div>
 
         {/* average duration donut chart */}
-        <div className="lg:col-span-4 bg-white border border-slate-200 p-6 rounded-xl flex flex-col justify-between">
+        <div className="lg:col-span-4 bg-[#121827] border border-slate-800 p-6 rounded-2xl flex flex-col justify-between shadow-xl">
           <div>
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-6 font-label-md">
+            <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-6 font-label-md">
               Average Processing Time
             </h3>
             
@@ -378,7 +379,7 @@ export default function ReportingView({ status }: ReportingViewProps) {
                 {/* Circular Gauge */}
                 <svg className="w-full h-full transform -rotate-90">
                   <circle 
-                    className="text-slate-100" 
+                    className="text-slate-800" 
                     cx="72" 
                     cy="72" 
                     fill="transparent" 
@@ -387,7 +388,7 @@ export default function ReportingView({ status }: ReportingViewProps) {
                     strokeWidth="8"
                   ></circle>
                   <circle 
-                    className="text-[#006c49]" 
+                    className="text-indigo-500" 
                     cx="72" 
                     cy="72" 
                     fill="transparent" 
@@ -401,22 +402,22 @@ export default function ReportingView({ status }: ReportingViewProps) {
                 </svg>
 
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-3xl font-extrabold text-black font-display-lg">{averageProcessingTime}s</span>
-                  <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest font-label-sm">Avg/Job</span>
+                  <span className="text-3xl font-extrabold text-white font-display-lg">{averageProcessingTime}s</span>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-label-sm">Avg/Job</span>
                 </div>
 
               </div>
             </div>
           </div>
 
-          <div className="space-y-3.5 pt-4 border-t border-slate-100 text-xs">
+          <div className="space-y-3.5 pt-4 border-t border-slate-800 text-xs">
             <div className="flex justify-between items-center">
-              <span className="text-slate-500 font-body-sm">Peak Speed</span>
-              <span className="text-black font-bold font-label-sm">12s</span>
+              <span className="text-slate-400 font-body-sm">Peak Speed</span>
+              <span className="text-white font-bold font-label-sm">12s</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-slate-500 font-body-sm">DeepSeek Latency</span>
-              <span className="text-[#006c49] font-bold font-label-sm">Low (8ms)</span>
+              <span className="text-slate-400 font-body-sm">DeepSeek Latency</span>
+              <span className="text-emerald-400 font-bold font-label-sm">Low (8ms)</span>
             </div>
           </div>
 
@@ -425,19 +426,19 @@ export default function ReportingView({ status }: ReportingViewProps) {
       </div>
 
       {/* Audit Log database table pane */}
-      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-xs">
+      <div className="bg-[#121827] border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
         
-        <div className="px-6 py-5 border-b border-slate-100 flex justify-between items-center">
+        <div className="px-6 py-5 border-b border-slate-800 flex justify-between items-center">
           <div>
-            <h3 className="text-lg font-bold text-black font-display-lg">Comprehensive Audit Log</h3>
-            <p className="text-xs text-slate-500 mt-1 leading-relaxed font-body-sm">
-              Cryptographically aligned transaction histories for compliance compliance.
+            <h3 className="text-base font-extrabold text-white font-display-lg">Comprehensive Audit Log</h3>
+            <p className="text-xs text-slate-400 mt-1 leading-relaxed font-body-sm">
+              Cryptographically aligned transaction histories for compliance validation.
             </p>
           </div>
           <button 
             onClick={handleExportCSV}
             disabled={totalJobsCount === 0}
-            className="flex items-center gap-1.5 text-xs font-bold px-3.5 py-2 glass-btn-secondary rounded-lg font-label-sm cursor-pointer"
+            className="flex items-center gap-1.5 text-xs font-bold px-3.5 py-2 glass-btn-secondary rounded-xl font-label-sm cursor-pointer disabled:opacity-40"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Export CSV</span>
@@ -447,7 +448,7 @@ export default function ReportingView({ status }: ReportingViewProps) {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="bg-slate-50 text-slate-500 uppercase tracking-wider font-semibold border-b border-slate-100">
+              <tr className="bg-[#0d1322] text-slate-400 uppercase tracking-wider font-semibold border-b border-slate-800">
                 <th className="px-6 py-4 font-label-sm">Job ID</th>
                 <th className="px-6 py-4 font-label-sm">Action Type</th>
                 <th className="px-6 py-4 font-label-sm">File Name</th>
@@ -459,30 +460,30 @@ export default function ReportingView({ status }: ReportingViewProps) {
                 <th className="px-6 py-4 font-label-sm text-right">Date</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-800/80">
               {visibleJobs.length === 0 ? (
                 <tr>
-                  <td colSpan={9} className="px-6 py-12 text-center text-slate-400">
+                  <td colSpan={9} className="px-6 py-12 text-center text-slate-500 font-medium">
                     No academic jobs executed yet. Head over to the Processor tab!
                   </td>
                 </tr>
               ) : (
                 visibleJobs.map((job) => (
-                  <tr key={job.id} className="hover:bg-slate-50/50 transition-colors group">
-                    <td className="px-6 py-4 font-bold text-black font-label-md">{job.id}</td>
-                    <td className="px-6 py-4 text-slate-700 font-medium font-body-sm">{job.action}</td>
-                    <td className="px-6 py-4 text-slate-500 font-body-sm">{job.sourceName}</td>
-                    <td className="px-6 py-4 text-right text-slate-800 font-medium font-label-md">{job.wordCount.toLocaleString()}</td>
-                    <td className="px-6 py-4 text-right text-[#006c49] font-bold font-label-md">${job.cost.toFixed(2)}</td>
-                    <td className="px-6 py-4 text-center font-bold text-[#006c49] font-label-md">{getJobAiRisk(job)}</td>
-                    <td className="px-6 py-4 text-center font-bold text-slate-800 font-label-md">{getJobSimilarity(job)}</td>
+                  <tr key={job.id} className="hover:bg-slate-800/30 transition-colors group">
+                    <td className="px-6 py-4 font-bold text-slate-200 font-label-md">{job.id}</td>
+                    <td className="px-6 py-4 text-slate-300 font-medium font-body-sm">{job.action}</td>
+                    <td className="px-6 py-4 text-slate-400 font-body-sm">{job.sourceName}</td>
+                    <td className="px-6 py-4 text-right text-slate-300 font-medium font-label-md">{job.wordCount.toLocaleString()}</td>
+                    <td className="px-6 py-4 text-right text-emerald-400 font-bold font-label-md">${job.cost.toFixed(2)}</td>
+                    <td className="px-6 py-4 text-center font-bold text-emerald-400 font-label-md">{getJobAiRisk(job)}</td>
+                    <td className="px-6 py-4 text-center font-bold text-slate-300 font-label-md">{getJobSimilarity(job)}</td>
                     <td className="px-6 py-4 text-center">
-                      <span className="inline-flex items-center gap-1 bg-[#6cf8bb]/15 text-[#00714d] px-2.5 py-0.5 rounded-full text-[10px] font-bold border border-[#6cf8bb]/30">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#006c49]"></span>
+                      <span className="inline-flex items-center gap-1 bg-emerald-500/10 text-emerald-400 px-2.5 py-0.5 rounded-full text-[10px] font-bold border border-emerald-500/30">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
                         Success
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-right text-slate-400 font-body-sm">{formatJobDate(job.date)}</td>
+                    <td className="px-6 py-4 text-right text-slate-500 font-body-sm">{formatJobDate(job.date)}</td>
                   </tr>
                 ))
               )}
@@ -492,24 +493,24 @@ export default function ReportingView({ status }: ReportingViewProps) {
 
         {/* pagination tools */}
         {totalPages > 1 && (
-          <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex justify-between items-center text-xs">
-            <span className="text-slate-500 font-semibold">
+          <div className="px-6 py-4 bg-[#0d1322] border-t border-slate-800 flex justify-between items-center text-xs">
+            <span className="text-slate-400 font-medium">
               Showing {startIndex + 1} - {Math.min(startIndex + itemsPerPage, totalJobsCount)} of {totalJobsCount} jobs
             </span>
             <div className="flex gap-2">
               <button 
                 onClick={prevPage}
                 disabled={currentPage === 1}
-                className="p-1.5 glass-btn-secondary rounded-lg cursor-pointer"
+                className="p-1.5 glass-btn-secondary rounded-lg cursor-pointer disabled:opacity-30"
               >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft className="w-4 h-4 text-slate-300" />
               </button>
               <button 
                 onClick={nextPage}
                 disabled={currentPage === totalPages}
-                className="p-1.5 glass-btn-secondary rounded-lg cursor-pointer"
+                className="p-1.5 glass-btn-secondary rounded-lg cursor-pointer disabled:opacity-30"
               >
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-4 h-4 text-slate-300" />
               </button>
             </div>
           </div>
